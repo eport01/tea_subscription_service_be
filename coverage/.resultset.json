@@ -1,0 +1,42 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/models/customer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/models/subscription.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/models/tea.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/controllers/application_controller.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      }
+    },
+    "timestamp": 1677013233
+  }
+}
