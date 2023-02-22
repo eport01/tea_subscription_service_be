@@ -10,7 +10,8 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def update 
-    if Subscription.exists?(params[:id]) && Subscription.update(params[:id], subscription_params ).save
+    customer = Customer.find(params[:customer_id])
+    if customer.subscriptions.exists?(params[:id]) 
       render json: SubscriptionSerializer.new(Subscription.update(params[:id], subscription_params))
     else
       render json: {error: "unable to cancel subscription"}, status: 404 
