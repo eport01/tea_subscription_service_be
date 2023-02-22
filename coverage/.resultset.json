@@ -6,12 +6,12 @@
           1,
           1,
           1,
-          1,
           null
         ]
       },
       "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/models/subscription.rb": {
         "lines": [
+          1,
           1,
           1,
           1,
@@ -24,19 +24,54 @@
           1,
           1,
           1,
+          null,
           1,
+          null
+        ]
+      },
+      "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/models/tea_subscription.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/controllers/api/v1/subscriptions_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
           null
         ]
       },
       "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/controllers/application_controller.rb": {
         "lines": [
-          0,
-          0
-        ],
-        "branches": {
-        }
+          1,
+          null
+        ]
+      },
+      "/Users/emilyport/Desktop/Turing/mod_4/projects/tea_subscription_service/app/serializers/subscription_serializer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
       }
     },
-    "timestamp": 1677013233
+    "timestamp": 1677030158
   }
 }
