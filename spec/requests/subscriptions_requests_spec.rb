@@ -91,6 +91,28 @@ describe 'subscription endpoints' do
       expect(subscription_2.status).to eq("Active")
 
     end
+
+    it 'cancel subscription sadpath, subscription does not exist or cant be saved' do 
+      customer = Customer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, address: Faker::Address.full_address)
+      subscription_1 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+      subscription_2 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+    
+      customer2 = Customer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, address: Faker::Address.full_address)
+      subscription_21 = customer2.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+      subscription_22 = customer2.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+    
+      cancel_subscription = {
+        "status": "Cancelled"
+      }
+
+      patch "/api/v1/customers/#{customer2.id}/subscriptions/40", headers: {'CONTENT_TYPE' => 'application/json' }, params: JSON.generate(cancel_subscription)
+      
+      parsed_subscription = JSON.parse(response.body, symbolize_names: true)
+      expect(response).to have_http_status 404
+      expect(parsed_subscription).to have_key(:error)
+      expect(parsed_subscription).to_not have_key(:data)
+      expect(parsed_subscription[:error]).to eq("unable to cancel subscription")
+    end
   end
 
 end
