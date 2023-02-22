@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2023-02-21T18:58:58-07:00">2023-02-21T18:58:58-07:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2023-02-22T15:30:20-07:00">2023-02-22T15:30:20-07:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -29,8 +29,8 @@
      </span>
      covered at
      <span class="covered_strength">
-       <span class="yellow">
-         1.0
+       <span class="green">
+         1.09
        </span>
     </span> hits/line
     )
@@ -43,8 +43,8 @@
   </div>
 
   <div class="t-line-summary">
-    <b>28</b> relevant lines,
-    <span class="green"><b>28</b> lines covered</span> and
+    <b>32</b> relevant lines,
+    <span class="green"><b>32</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed. </span>
     (<span class="green">
   100.0%
@@ -73,11 +73,11 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#90480a86c42f22e47052fb73c560b026931c2121" class="src_link" title="app/controllers/api/v1/subscriptions_controller.rb">app/controllers/api/v1/subscriptions_controller.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">16</td>
-            <td class="cell--number">9</td>
-            <td class="cell--number">9</td>
+            <td class="cell--number">24</td>
+            <td class="cell--number">13</td>
+            <td class="cell--number">13</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">1.00</td>
+            <td class="cell--number">1.23</td>
             
           </tr>
         
@@ -165,8 +165,8 @@
      </span>
      covered at
      <span class="covered_strength">
-       <span class="yellow">
-         1.0
+       <span class="green">
+         1.21
        </span>
     </span> hits/line
     )
@@ -179,8 +179,8 @@
   </div>
 
   <div class="t-line-summary">
-    <b>10</b> relevant lines,
-    <span class="green"><b>10</b> lines covered</span> and
+    <b>14</b> relevant lines,
+    <span class="green"><b>14</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed. </span>
     (<span class="green">
   100.0%
@@ -209,11 +209,11 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#90480a86c42f22e47052fb73c560b026931c2121" class="src_link" title="app/controllers/api/v1/subscriptions_controller.rb">app/controllers/api/v1/subscriptions_controller.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">16</td>
-            <td class="cell--number">9</td>
-            <td class="cell--number">9</td>
+            <td class="cell--number">24</td>
+            <td class="cell--number">13</td>
+            <td class="cell--number">13</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">1.00</td>
+            <td class="cell--number">1.23</td>
             
           </tr>
         
@@ -719,8 +719,8 @@
     
 
     <div class="t-line-summary">
-      <b>9</b> relevant lines.
-      <span class="green"><b>9</b> lines covered</span> and
+      <b>13</b> relevant lines.
+      <span class="green"><b>13</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
 
@@ -859,18 +859,18 @@
 
             
 
-            <code class="ruby">  private </code>
+            <code class="ruby">  def update </code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="13">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="2" data-linenumber="13">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">  def subscription_params </code>
+            <code class="ruby">    if Subscription.exists?(params[:id]) &amp;&amp; Subscription.update(params[:id], subscription_params ).save</code>
           </li>
         </div>
       
@@ -881,7 +881,7 @@
 
             
 
-            <code class="ruby">    params.permit(:customer_id, :title, :price, :status, :frequency)</code>
+            <code class="ruby">      render json: SubscriptionSerializer.new(Subscription.update(params[:id], subscription_params))</code>
           </li>
         </div>
       
@@ -892,12 +892,100 @@
 
             
 
+            <code class="ruby">    else</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="16">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">      render json: {error: &quot;unable to cancel subscription&quot;}, status: 404 </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="17">
+            
+            
+
+            
+
+            <code class="ruby">    end </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="18">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="16">
+          <li class="never" data-hits="" data-linenumber="19">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="20">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  private </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="21">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def subscription_params </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="22">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    params.permit(:customer_id, :title, :price, :status, :frequency)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="23">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="24">
             
             
 
