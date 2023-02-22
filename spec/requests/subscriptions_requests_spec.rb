@@ -105,7 +105,7 @@ describe 'subscription endpoints' do
         "status": "Cancelled"
       }
 
-      patch "/api/v1/customers/#{customer2.id}/subscriptions/40", headers: {'CONTENT_TYPE' => 'application/json' }, params: JSON.generate(cancel_subscription)
+      patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription_21.id}", headers: {'CONTENT_TYPE' => 'application/json' }, params: JSON.generate(cancel_subscription)
       
       parsed_subscription = JSON.parse(response.body, symbolize_names: true)
       expect(response).to have_http_status 404
