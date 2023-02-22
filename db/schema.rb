@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2023_02_21_204028) do
   create_table "teas", force: :cascade do |t|
     t.string "title"
     t.integer "temperature"
-    t.string "brew_time"
+    t.integer "brew_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
