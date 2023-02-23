@@ -70,6 +70,15 @@ describe 'subscription endpoints' do
 
 
     end
+
+    it 'sad path, cant get subscriptions for customer, customer doesnt exist' do 
+      get "/api/v1/customers/50/subscriptions"
+
+      parsed_subscription = JSON.parse(response.body, symbolize_names: true)
+      expect(response).to have_http_status 404
+      expect(parsed_subscription[:error]).to eq("customer doesnt exist")
+    end
+
   end
 
   describe 'cancel subscription endpoint' do 

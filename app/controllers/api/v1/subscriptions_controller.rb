@@ -1,8 +1,11 @@
 class Api::V1::SubscriptionsController < ApplicationController 
-  before_action :find_customer
+  before_action :find_customer 
+  
   def index 
-    if params[:customer_id]
+    if Customer.exists?(params[:customer_id])
       render json: SubscriptionSerializer.new(@customer.active_subscriptions)
+    else  
+      render json: {error: "customer doesnt exist"}, status: 404 
     end
   end
   def create 
@@ -21,7 +24,11 @@ class Api::V1::SubscriptionsController < ApplicationController
   private 
 
   def find_customer
-    @customer = Customer.find(params[:customer_id])
+    if Customer.exists?(params[:customer_id])
+      @customer = Customer.find(params[:customer_id])
+    else 
+      @customer = nil 
+    end 
   end
 
   def subscription_params 
