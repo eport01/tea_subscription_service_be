@@ -8,6 +8,7 @@ class Api::V1::SubscriptionsController < ApplicationController
       render json: {error: "customer doesnt exist"}, status: 404 
     end
   end
+  
   def create 
     subscription = Subscription.new(subscription_params)
     if Customer.exists?(params[:customer_id]) && subscription.valid? && Subscription.where(subscription_params) ==[]

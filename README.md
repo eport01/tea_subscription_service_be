@@ -1,14 +1,37 @@
 <div align="center">
-  <h1>Tea Subscription Service API API</h1>
+  <h1>Tea Subscription Service API</h1>
 </div>
 
 <br>
 
 # Table of Contents
 
+- [Project Overview](#project-overview)
+- [Setup](#setup)
+- [Tech and Tools](#tech-and-tools)
+- [Schema](#schema)
+- [Endpoints](#endpoints)
+- [Future Goals](#future-goals)
+- [Contributors](#contributors)
+
 # Project Overview 
 
+Tea Subscription Service REST API was developed in under 8 hours as part of Turing's [technical challenge take home](https://mod4.turing.edu/projects/take_home/take_home_be) practice. This API demonstrates my strong understanding of Ruby on Rails and my ability to create restful routes as well as well-organized code that follows OOP. Tea Subscription Service was built using test driven development and behavior driven development for error handling. A GitHub project board was used to manage tickets as the API was developed. The schema was developed so that a subscription belongs to a customer, and a customer can have many subscriptions. Additionally, a subscription can have many teas and a tea can be a part of many subscriptions. If developed further, I would incorporate additional endpoints to return what teas are included in a subscription and choosing teas for a subscription. CircleCI was used for continuous integration. 
+
+
+
 # Setup 
+
+1. Clone the repository
+2. cd into the root directory
+3. Install gem packages: `bundle install`
+4. Setup the database: `rails db:{drop,create,migrate,seed}`
+5. You may run the RSpec test suite locally with `bundle exec rspec`
+6. Open the coverage report with `open coverage/index.html`, testing coverage maintained at 100% 
+7. Run the server locally with `rails s`
+8. Navigate to http://localhost:3000 in your browser and explore the [endpoints](#endpoints) listed below
+
+
 
 # Tech and Tools 
 
@@ -91,13 +114,21 @@ JSON Response Example:
 
 Request: <br>
 ```
-GET 
+PATCH /api/v1/customers/#{customer.id}/subscriptions/#{subscrption.id} 
 ```
 
+Request Body: 
+```json 
+{
+  "status": "Cancelled"
+}
+```
 
 JSON Response Example:
 ```json 
-
+{
+  "message": "Subscription status is now: Cancelled"
+}
 
 
 ```
@@ -109,18 +140,75 @@ JSON Response Example:
 
 Request: <br>
 ```
-GET 
+GET /api/v1/customers/#{customer.id}/subscriptions
 ```
 
 
 JSON Response Example:
 ```json 
-
-
-
+{
+    "data": [
+        {
+            "id": "66",
+            "type": "subscription",
+            "attributes": {
+                "customer_id": 1,
+                "title": "Earl Grey",
+                "price": 30.0,
+                "status": "Cancelled",
+                "frequency": 10
+            }
+        },
+        {
+            "id": "68",
+            "type": "subscription",
+            "attributes": {
+                "customer_id": 1,
+                "title": "Mint",
+                "price": 40.0,
+                "status": "Cancelled",
+                "frequency": 10
+            }
+        },
+        {
+            "id": "60",
+            "type": "subscription",
+            "attributes": {
+                "customer_id": 1,
+                "title": "Earl Grey",
+                "price": 30.0,
+                "status": "Active",
+                "frequency": 10
+            }
+        },
+        {...},
+        {...}
 ```
 </details>
 
-# Known Issues and Future Goals 
+# Future Goals 
+- Additional endpoints to get a list of teas in a subscription, choose teas for a subscription, get only active subscriptions for a customer, and more 
+- Incorporate continuous deployment to Heroku using CircleCI 
+- Build a small frontend using React for practice 
 
-## Contributors 
+# Contributors 
+
+<table>
+  <tr>
+    <td><img src="https://avatars.githubusercontent.com/u/57226658?v=4" width=auto height=110px></td>
+  </tr>
+
+  <tr>
+    <td><div align="center"><strong>Emily Port</strong></div></td>
+
+  </tr>
+
+  <tr>
+    <td>
+      <div align="center">
+        <a href="https://github.com/eport01">GitHub</a><br>
+        <a href="https://www.linkedin.com/in/emily-port-3ab6389b/">LinkedIn</a>
+      <div>
+    </td>
+  </tr>
+</table>
