@@ -2,7 +2,7 @@ class Api::V1::SubscriptionsController < ApplicationController
   before_action :find_customer
   def index 
     if params[:customer_id]
-      render json: SubscriptionSerializer.new(@customer.subscriptions)
+      render json: SubscriptionSerializer.new(@customer.active_subscriptions)
     end
   end
   def create 

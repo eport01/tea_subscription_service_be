@@ -32,11 +32,12 @@ describe 'subscription endpoints' do
 
   end
 
-  describe 'get customer subscriptions' do 
+  describe 'get customers active subscriptions' do 
     it 'gets the subscriptions for a customer' do 
       customer = Customer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, address: Faker::Address.full_address)
       subscription_1 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
       subscription_2 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+      subscription_3 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Cancelled" , frequency: Faker::Number.number(digits: 2))
 
       get "/api/v1/customers/#{customer.id}/subscriptions"
 
@@ -44,7 +45,11 @@ describe 'subscription endpoints' do
       
       parsed_subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
 
-      expect(customer.subscriptions).to eq([subscription_1, subscription_2])
+      expect(parsed_subscriptions.count).to eq(2)
+
+      expect(parsed_subscriptions[0][:id].to_i).to eq(subscription_1.id)
+      expect(parsed_subscriptions[1][:id].to_i).to eq(subscription_2.id)
+
 
       expect(parsed_subscriptions[0][:attributes]).to have_key(:customer_id)
       expect(parsed_subscriptions[0][:attributes][:customer_id]).to eq(customer.id)
