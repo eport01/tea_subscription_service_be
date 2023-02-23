@@ -2,8 +2,9 @@ class Customer < ApplicationRecord
   has_many :subscriptions
   validates_presence_of :first_name, :last_name, :email, :address
 
-  def active_subscriptions 
-    subscriptions.where(status: "Active")
-  end
+  #to find only active subscriptions: 
+  # def active_subscriptions 
+  #   subscriptions.where(status: "Active")
+  # end
 
 end
