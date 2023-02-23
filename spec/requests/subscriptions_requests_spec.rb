@@ -16,6 +16,7 @@ describe 'subscription endpoints' do
         'Accept' => 'application/json'        
       }
       post "/api/v1/customers/#{customer.id}/subscriptions", headers: headers, params: JSON.generate(subscription)
+      
       new_subscription = Subscription.last 
       expect(response).to be_successful 
 
@@ -27,6 +28,63 @@ describe 'subscription endpoints' do
       expect(new_subscription.status).to eq("Active")
       expect(new_subscription.frequency).to eq(10)
       expect(customer.subscriptions.last).to eq(new_subscription)
+    end
+
+    it 'cant create a customer subscription for a customer that doesnt exist' do 
+      subscription = {
+        title: "Mint",
+        price: 40,
+        status: "Active",
+        frequency: 10
+      }
+      headers = {
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json'        
+      }
+      post "/api/v1/customers/50/subscriptions", headers: headers, params: JSON.generate(subscription)
+      
+      parsed_subscription = JSON.parse(response.body, symbolize_names: true)
+      expect(response).to have_http_status 404
+      expect(parsed_subscription[:error]).to eq("unable to subscribe")
+    end
+
+    it 'cant create the same subscription for a customer more than once' do 
+      customer = Customer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, address: Faker::Address.full_address)
+
+      subscription = {
+        title: "Mint",
+        price: 40,
+        status: "Active",
+        frequency: 10
+      }
+      headers = {
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json'        
+      }
+      post "/api/v1/customers/#{customer.id}/subscriptions", headers: headers, params: JSON.generate(subscription)
+    
+      new_subscription = Subscription.last 
+      expect(response).to be_successful 
+
+      expect(response.status).to eq(201)
+
+      expect(new_subscription.title).to eq("Mint")
+
+      subscription = {
+        title: "Mint",
+        price: 40,
+        status: "Active",
+        frequency: 10
+      }
+      headers = {
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json'        
+      }
+      post "/api/v1/customers/#{customer.id}/subscriptions", headers: headers, params: JSON.generate(subscription)
+    
+      parsed_subscription = JSON.parse(response.body, symbolize_names: true)
+      expect(response).to have_http_status 404
+      expect(parsed_subscription[:error]).to eq("unable to subscribe")
     end
 
 
