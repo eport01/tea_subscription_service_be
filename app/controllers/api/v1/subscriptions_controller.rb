@@ -3,18 +3,12 @@ class Api::V1::SubscriptionsController < ApplicationController
 
   def index 
     if Customer.exists?(params[:customer_id])
-      render json: SubscriptionSerializer.new(@customer.active_subscriptions)
+      render json: SubscriptionSerializer.new(@customer.subscriptions)
     else  
       render json: {error: "customer doesnt exist"}, status: 404 
     end
   end
   def create 
-    # subscription = @customer.subscriptions.create(subscription_params)
-    # if subscription.save 
-    #   render json: SubscriptionSerializer.new(subscription), status: 200
-    # else
-    #   render json: {error: "unable to subscribe"}
-    # end
     subscription = Subscription.new(subscription_params)
     if Customer.exists?(params[:customer_id]) && subscription.valid? && Subscription.where(subscription_params) ==[]
       render json: SubscriptionSerializer.new(@customer.subscriptions.create(subscription_params)), status: 201 
