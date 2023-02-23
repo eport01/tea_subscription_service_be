@@ -81,14 +81,18 @@ describe 'subscription endpoints' do
       }
 
       patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription_1.id}", headers: {'CONTENT_TYPE' => 'application/json' }, params: JSON.generate(cancel_subscription)
-      
-      parsed_subscription = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
 
-      expect(response). to be_successful
+      parsed_subscription = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful
       expect(response.status).to eq(200)
 
-      expect(parsed_subscription[:status]).to eq("Cancelled")
+      expect(parsed_subscription[:message]).to eq("Subscription status is now: Cancelled")
+
+      updated_subscription_1 = customer.subscriptions.find(subscription_1.id)
+      expect(updated_subscription_1.status).to eq("Cancelled")
       expect(subscription_2.status).to eq("Active")
+
 
     end
 
@@ -112,6 +116,60 @@ describe 'subscription endpoints' do
       expect(parsed_subscription).to have_key(:error)
       expect(parsed_subscription).to_not have_key(:data)
       expect(parsed_subscription[:error]).to eq("unable to cancel subscription")
+    end
+  end
+
+  describe 'subscription edge cases' do 
+    it 'status can only be Active or Cancelled' do 
+      customer = Customer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, address: Faker::Address.full_address)
+      subscription_1 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+      subscription_2 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+          
+      expect(subscription_1.status).to eq("Active")
+      expect(subscription_2.status).to eq("Active")
+
+      cancel_subscription = {
+        "status": "chocolate"
+      }
+
+      patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription_1.id}", headers: {'CONTENT_TYPE' => 'application/json' }, params: JSON.generate(cancel_subscription)
+
+      parsed_subscription = JSON.parse(response.body, symbolize_names: true)
+
+      expect(parsed_subscription).to have_key(:error)
+
+      expect(parsed_subscription[:error]).to eq("unable to cancel subscription")
+
+      updated_subscription_1 = customer.subscriptions.find(subscription_1.id)
+
+      expect(updated_subscription_1.status).to eq("Active")
+    end
+
+    it 'only status can be updated' do 
+      customer = Customer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, address: Faker::Address.full_address)
+      subscription_1 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+      subscription_2 = customer.subscriptions.create(title: Faker::Beer.brand, price: Faker::Number.decimal(l_digits: 2, r_digits: 2), status: "Active" , frequency: Faker::Number.number(digits: 2))
+      
+      expect(subscription_1.status).to eq("Active")
+
+      cancel_subscription = {
+        "status": "Cancelled", 
+        "title": "really good chocolate"
+      }
+
+      patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription_1.id}", headers: {'CONTENT_TYPE' => 'application/json' }, params: JSON.generate(cancel_subscription)
+
+      parsed_subscription = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
+
+      expect(parsed_subscription[:message]).to eq("Subscription status is now: Cancelled")
+
+      updated_subscription_1 = customer.subscriptions.find(subscription_1.id)
+      expect(updated_subscription_1.status).to eq("Cancelled")
+      expect(updated_subscription_1.title).to_not eq("really good chocolate")
+      expect(updated_subscription_1.title).to eq(subscription_1.title)
     end
   end
 
