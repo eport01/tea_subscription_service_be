@@ -17,7 +17,9 @@
 # Project Overview 
 
 Tea Subscription Service REST API was developed in under 8 hours as part of Turing's [technical challenge take home](https://mod4.turing.edu/projects/take_home/take_home_be) practice. This API demonstrates my strong understanding of Ruby on Rails and my ability to create restful routes as well as well-organized code that follows OOP. Tea Subscription Service was built using test driven development and behavior driven development for error handling. A GitHub project board was used to manage tickets as the API was developed. The schema was developed so that a subscription belongs to a customer, and a customer can have many subscriptions. Additionally, a subscription can have many teas and a tea can be a part of many subscriptions. If developed further, I would incorporate additional endpoints to return what teas are included in a subscription and choosing teas for a subscription. CircleCI was used for continuous integration. 
+<br>
 
+<img src="images/project_board.png" alt="db schema" class="center" width="500" height=auto>
 
 
 # Setup 
